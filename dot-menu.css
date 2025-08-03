@@ -1,0 +1,115 @@
+#dot-menu-wrapper {
+  position: fixed;
+  top: 64px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.09s ease;
+  width: 100vw;
+  max-width: none;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  padding: 0 16px;
+}
+
+#dot-menu-wrapper.show {
+  pointer-events: auto;
+  opacity: 1;
+}
+
+#dot-menu {
+  background: rgba(20, 20, 20, 0.94);
+  padding: 20px 16px;
+  border-radius: 0;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.18);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 512px;
+  min-width: 288px;
+  box-sizing: border-box;
+  user-select: none;
+  pointer-events: auto;
+}
+
+.menu-item {
+  flex: 1 1 0;
+  min-width: 0;
+  text-align: center;
+  font-size: 17px;
+  padding: 12px 0 11px 0;
+  border-radius: 8px;
+  background: #111;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background 0.18s ease;
+  user-select: none;
+}
+
+.menu-item:hover {
+  background: #1d1d1d;
+}
+
+body.light-theme #dot-menu {
+  background: rgba(255, 255, 255, 0.94);
+}
+
+body.light-theme .menu-item {
+  background: #eee;
+  color: #000;
+}
+
+body.light-theme .menu-item:hover {
+  background: #ccc;
+}
+
+/* --- NEW: Function menu popup --- */
+#function-menu {
+  position: fixed;
+  background: rgba(20, 20, 20, 0.95);
+  padding: 10px 14px;
+  border-radius: 6px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 120px;
+  pointer-events: auto;
+}
+
+.function-item {
+  background: #111;
+  color: #fff;
+  border: none;
+  padding: 8px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  text-align: center;
+  font-size: 15px;
+}
+
+.function-item:hover {
+  background: #222;
+}
+
+body.light-theme #function-menu {
+  background: rgba(255, 255, 255, 0.96);
+}
+
+body.light-theme .function-item {
+  background: #eee;
+  color: #000;
+}
+
+body.light-theme .function-item:hover {
+  background: #ccc;
+}

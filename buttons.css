@@ -1,0 +1,31 @@
+.button,
+.menu-item,
+.function-item {
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  padding: 6px 12px;
+  background: #000;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+}
+
+.button:hover,
+.menu-item:hover,
+.function-item:hover {
+  background: #222;
+}
+
+body.light-theme .button,
+body.light-theme .menu-item,
+body.light-theme .function-item {
+  background: #fff;
+  color: #000;
+}
+
+body.light-theme .button:hover,
+body.light-theme .menu-item:hover,
+body.light-theme .function-item:hover {
+  background: #eee;
+}

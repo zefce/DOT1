@@ -1,0 +1,33 @@
+:root {
+  --dot-menu-transition: opacity 0.025s ease-out, transform 0.045s ease-out;
+  --dot-function-transition: opacity 0.01s ease-out, transform 0.02s ease-out;
+}
+
+.dot-fade, 
+#dot-menu, 
+#function-menu, 
+.menu-popup {
+  transition: var(--dot-menu-transition);
+}
+
+.dot-fast-fade {
+  transition: var(--dot-function-transition);
+}
+
+@keyframes dotBounce {
+  0%   { transform: scale(0.92);}
+  50%  { transform: scale(1.13);}
+  100% { transform: scale(1);}
+}
+
+/* Добавлена анимация появления меню */
+@keyframes menuBounceIn {
+  0%   { transform: scale(0.88); opacity: 0; }
+  50%  { transform: scale(1.05); opacity: 0.6; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes menuFadeOut {
+  0%   { transform: scale(1); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0; }
+}

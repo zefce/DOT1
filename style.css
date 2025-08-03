@@ -1,0 +1,492 @@
+/* === Базовые стили === */
+
+html, body {
+  height: 100%;
+  min-height: 100%;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #000;
+  color: #fff;
+  font-family: sans-serif;
+  min-height: 100vh;
+  height: 100vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: column;
+}
+
+body.light-theme {
+  background-color: #fff;
+  color: #000;
+}
+
+.top-bar {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  z-index: 10;
+  transition: background-color 0.6s ease, color 0.6s ease;
+}
+
+body.light-theme .top-bar {
+  background-color: #000;
+}
+
+/* === DOT === */
+
+#dot-core {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 44px !important;
+  height: 44px !important;
+  background-color: #000;
+  border-radius: 50%;
+  opacity: 0.9;
+  cursor: pointer;
+  transition:
+    background-color 0.25s,
+    width 0.38s cubic-bezier(0.3,0.64,0.4,1.1),
+    height 0.36s cubic-bezier(0.22,0.72,0.36,1),
+    border-radius 0.28s cubic-bezier(0.32,0.6,0.32,1.1),
+    padding 0.22s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  user-select: none;
+  z-index: 50;
+}
+
+body.light-theme #dot-core {
+  background-color: #fff;
+}
+
+#dot-core::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  border-radius: inherit;
+  transform: scale(1);
+  transition: transform 0.22s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+}
+
+#dot-core:hover::before {
+  transform: scale(1.1);
+}
+
+#dot-core.active {
+  background-color: #ccc;
+}
+
+/* DOT — search mode */
+#dot-core.search-mode {
+  width: 128px !important;
+  height: 40px !important;
+  border-radius: 20px !important;
+  background-color: #000;
+  transition:
+    background-color 0.25s,
+    width 0.22s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    height 0.22s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    border-radius 0.22s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    padding 0.22s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 12px;
+  box-shadow: 0 2px 14px 0 #0002;
+  opacity: 0.98;
+}
+
+body.light-theme #dot-core.search-mode {
+  background-color: #fff;
+}
+
+#dot-core.search-mode::before {
+  display: none;
+}
+
+/* DOT search input */
+#dot-core .dot-search-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font-size: 16px;
+  padding: 0 3px;
+  margin: 0;
+  height: 32px;
+  align-self: center;
+}
+
+#dot-core .dot-search-input::placeholder {
+  color: #aaa;
+  opacity: 0.9;
+  font-size: 15px;
+}
+
+#dot-core .dot-add-btn {
+  border: none;
+  background: none;
+  color: inherit;
+  font-size: 21px;
+  cursor: pointer;
+  padding: 0 3px;
+  opacity: 0.75;
+  align-self: center;
+  transition: opacity 0.14s;
+  outline: none;
+}
+
+#dot-core .dot-add-btn:hover {
+  opacity: 1;
+}
+
+/* --- SETTINGS MODE: анимация раскрытия dot в панель --- */
+#dot-core.settings-mode {
+  position: fixed;
+  top: 64px;
+  left: 50%;
+  transform: translateX(-50%, 0);
+  width: min(96vw, 420px) !important;
+  height: min(92vh, 420px) !important;
+  border-radius: 22px !important;
+  background: #181818;
+  transition:
+    width 0.38s cubic-bezier(0.3,0.64,0.4,1.1),
+    height 0.36s cubic-bezier(0.22,0.72,0.36,1),
+    border-radius 0.28s cubic-bezier(0.32,0.6,0.32,1.1),
+    background 0.22s,
+    padding 0.19s cubic-bezier(0.33,0.7,0.36,1.05);
+  box-shadow: 0 8px 44px 0 #0006;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  padding: 32px 32px 24px 32px;
+  z-index: 11000;
+  opacity: 1;
+  overflow: hidden;
+}
+body.light-theme #dot-core.settings-mode {
+  background: #fafafa;
+}
+
+/* --- Настройки в DOT --- */
+.dot-settings-panel {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  animation: fadeInDotSettings 0.22s;
+}
+@keyframes fadeInDotSettings {
+  from { opacity: 0; transform: translateY(8px) scale(0.97);}
+  to   { opacity: 1; transform: translateY(0) scale(1);}
+}
+.settings-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 20px;
+  font-weight: 600;
+  padding-bottom: 10px;
+}
+.settings-close-btn {
+  border: none;
+  background: none;
+  font-size: 26px;
+  color: #888;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+  transition: color 0.18s;
+}
+.settings-close-btn:hover {
+  color: #000;
+}
+.settings-content {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  font-size: 16px;
+  color: #ccc;
+  padding-right: 4px;
+}
+body.light-theme .settings-header {
+  color: #333;
+}
+body.light-theme .settings-close-btn {
+  color: #aaa;
+}
+body.light-theme .settings-close-btn:hover {
+  color: #000;
+}
+body.light-theme .settings-content {
+  color: #444;
+}
+
+/* Остальные базовые элементы */
+.corner-zone {
+  width: 32px;
+  height: 32px;
+}
+
+#main-content {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* критично */
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  background-color: #000;
+  transition: background-color 0.6s ease, color 0.6s ease;
+  position: relative;
+  padding-top: 64px;
+  min-height: 0;
+}
+
+body.light-theme #main-content {
+  background-color: #fff;
+}
+
+#dot-core.pressed::before {
+  animation: dotBounce 0.19s cubic-bezier(0.36, 0.6, 0.3, 1.3);
+}
+
+.back-to-chats-btn {
+  padding: 10px 16px;
+  font-size: 15px;
+  background: #111;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+body.light-theme .back-to-chats-btn {
+  background: #eee;
+  color: #000;
+}
+
+.back-to-chats-btn:hover {
+  background: #222;
+}
+
+#back-to-chats-btn {
+  position: fixed;
+  top: 64px;
+  left: 16px;
+  z-index: 1000;
+}
+
+.dot-loader {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: inherit;
+  margin: 0 auto;
+  transition: width 0.38s cubic-bezier(0.3,0.64,0.4,1.1), height 0.46s cubic-bezier(0.22,0.72,0.36,1), border-radius 0.28s cubic-bezier(0.32,0.6,0.32,1.1);
+}
+
+#dot-core.settings-mode .dot-loader {
+  width: 48px;
+  height: 48px;
+  border-radius: 24px;
+  background: inherit;
+}
+
+/* HUB STICK - пользовательская панель на DOT */
+#hub-stick {
+  user-select: none;
+}
+
+.hub-btn {
+  width: 60px;
+  margin: 6px 0;
+  padding: 6px 0;
+  border: none;
+  border-radius: 8px;
+  background-color: #444;
+  color: white;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.hub-btn:hover {
+  background-color: #666;
+}
+
+/* Кнопка Logout */
+.logout-btn {
+  display: block;
+  width: 100px;
+  margin: 10px auto 20px auto;
+  padding: 8px 0;
+  border: none;
+  border-radius: 12px;
+  background-color: #d33;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+
+.logout-btn:hover {
+  background-color: #a00;
+}
+
+/* Чат */
+.chat-window {
+  max-width: 480px;
+  margin: 0 auto;
+  background-color: #222;
+  border-radius: 12px;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+.chat-messages {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 12px;
+}
+
+.chat-message {
+  background-color: #333;
+  padding: 8px 12px;
+  margin-bottom: 6px;
+  border-radius: 8px;
+  color: white;
+  word-wrap: break-word;
+}
+
+.chat-input {
+  width: calc(100% - 50px);
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  box-sizing: border-box;
+  background: transparent;
+  color: inherit;
+}
+
+.chat-send-btn {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  vertical-align: middle;
+  padding: 0;
+}
+
+.chat-send-btn .dot-svg-wrap svg {
+  fill: white;
+  width: 24px;
+  height: 24px;
+}
+
+/* Отключаем выделение для интерактивных элементов */
+button, input, textarea {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+/* Трансформация DOT в вертикальный квадрат (HUB STICK) */
+#dot-core.dot-hub-stick {
+  width: 60px !important;
+  height: 60px !important;
+  border-radius: 12px !important;
+  flex-direction: column !important;
+  justify-content: space-around !important;
+  padding: 8px 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  overflow: hidden !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Контейнер кнопок внутри HUB STICK */
+#dot-hub-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+/* Кнопки внутри HUB STICK */
+.hub-btn {
+  width: 80%;
+  margin: 3px auto;
+  padding: 3px 0;
+  border: none;
+  border-radius: 8px;
+  background-color: #444;
+  color: white;
+  font-size: 10px;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s;
+}
+
+.hub-btn:hover {
+  background-color: #666;
+}
+/* === FIX: Увеличенный размер DOT и кнопки отправки === */
+#dot-core {
+  width: 44px !important;
+  height: 44px !important;
+}
+
+.chat-dot-btn {
+  width: 44px !important;
+  height: 44px !important;
+}
+
+.chat-dot-btn .dot-svg-wrap {
+  width: 44px !important;
+  height: 44px !important;
+}
+
+.chat-dot-btn .dot-svg-wrap svg {
+  width: 44px !important;
+  height: 44px !important;
+}
+.dot-settings-fadein {
+  animation: dotSettingsFadeIn 0.19s cubic-bezier(0.36, 0.6, 0.3, 1.3);
+}
+@keyframes dotSettingsFadeIn {
+  from { opacity: 0; transform: scale(0.97);}
+  to   { opacity: 1; transform: scale(1);}
+}
